@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // simple route
 
 app.get('/', (req, res) => {
-  res.json({ message: ' wolocm to page' });
+  res.json({ message: ' Ahmad Fuck you 00100' });
 });
 app.get('/omar', (req, res) => {
   res.json({ message: 'wolocom to omar ' });
