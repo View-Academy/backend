@@ -4,7 +4,7 @@ module.exports = (mongoose) => {
       price: Number,
       name: String,
       published: Boolean,
-      discrption:String
+    
     },
     { timestamps: true }
   );

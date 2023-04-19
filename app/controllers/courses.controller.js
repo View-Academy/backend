@@ -11,7 +11,7 @@ exports.create = (req, res) => {
   const coruses = new Coruses({
     price: req.body.price ? req.body.price : 1,
     name: req.body.name ? req.body.name : 'null',
-    discrption: req.body.discrption ? req.body.discrption : '',
+ 
     published: req.body.published ? req.body.published : true,
   });
   // Save locatins in the database

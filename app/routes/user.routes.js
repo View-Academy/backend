@@ -15,6 +15,8 @@ module.exports = (app) => {
    router.get("/note/:id", user.findNote);
    // Retrieve all Tutorials
    router.get("/myquizes/:id", user.findQuizez);
+    // find  all re
+   router.get("/myquizes/resalut/:id", user.findResalut);
 
    // Retrieve all published Tutorials
    router.get("/published", user.findAllPublished);

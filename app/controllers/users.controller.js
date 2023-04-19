@@ -94,6 +94,23 @@ exports.findQuizez= async (req, res) => {
       });
     });
 };
+exports.findResalut= async (req, res) => {
+  const id = req.params.id;
+
+  await User.findById(id)
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data.previousQuiz[0].yourScore);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
 
 exports.findNote = async (req, res) => {
   const id = req.params.id;
