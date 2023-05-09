@@ -4,7 +4,7 @@ const Question = db.question;
 // Create and Save a new daet
 exports.create = (req, res) => {
   // Create a data
-
+  
   const question = new Question({
     id: Math.floor((Math.random() * 100000) + 1),
     courses: req.body.courses ? req.body.courses : 'Antomie',

@@ -1,5 +1,6 @@
 module.exports = (mongoose) => {
   var schema = mongoose.Schema({
+    id:Number,
     type: String,
     courses: String,
     subject: String,
@@ -9,11 +10,7 @@ module.exports = (mongoose) => {
     question: [Object, { timestamps: true }],
   });
 
-  schema.method('toJSON', function () {
-    const { __v, _id, ...object } = this.toObject();
-    object.id = _id;
-    return object;
-  });
+
 
   const Question = mongoose.model('questions', schema);
   return Question;
