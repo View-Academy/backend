@@ -6,7 +6,7 @@ exports.create = (req, res) => {
   // Create a data
 
   const question = new Question({
-    id2:  req.body.id2,
+    id2:req.body.id2,
     courses: req.body.courses ? req.body.courses : 'Antomie',
     subject: req.body.subject ? req.body.subject : 'Microbiology',
     systems: req.body.systems ? req.body.systems : 'Dermatology',
