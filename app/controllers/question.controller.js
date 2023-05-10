@@ -98,7 +98,7 @@ exports.update = (req, res) => {
       message: 'Data to update can not be empty!',
     });
   }
-  const id = req.params.id2;
+  const id = req.params.id;
   Question.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
