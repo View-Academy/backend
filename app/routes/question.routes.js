@@ -11,7 +11,7 @@ module.exports = (app) => {
   // Retrieve all Tutorials
   router.get('/', question.findAll);
   // Filtering Data
-  router.post('/findone', question.findone);
+  router.post('/:id', question.findone);
 
   // Update a Tutorial with id
   router.put('/:id', question.update);
