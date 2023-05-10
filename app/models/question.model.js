@@ -9,6 +9,11 @@ module.exports = (mongoose) => {
     totalPoint: { type: Number, default: 0 },
     question: [Object, { timestamps: true }],
   });
+  schema.method('toJSON', function () {
+    const { __v, _id, createdAt, ...object } = this.toObject();
+    object.id = _id;
+    return object;
+  });
 
 
 
