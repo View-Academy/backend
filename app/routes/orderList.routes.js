@@ -20,7 +20,7 @@ module.exports = (app) => {
   router.get('/:id', order.findOne);
 
   // Update a Tutorial with id
-  router.put('/:id', order.update);
+  router.put('/:id2', order.update);
 
   // update Without Delete
   router.put('/modifiy/:id', order.published);
