@@ -17,10 +17,10 @@ module.exports = (app) => {
   router.get('/unpublished', order.findAllunPublished);
 
   // Retrieve a single Tutorial with id
-  router.get('/:id', order.findOne);
+  router.get('/:id2', order.findOne);
 
   // Update a Tutorial with id
-  router.put('/:id2', order.update);
+  router.put('/:id', order.update);
 
   // update Without Delete
   router.put('/modifiy/:id', order.published);

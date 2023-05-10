@@ -52,7 +52,7 @@ exports.findAll = async (req, res) => {
 
 // Find a single calenders with an id
 exports.findOne = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id2;
 
   await Order.findById(id)
     .then((data) => {
