@@ -74,11 +74,7 @@ exports.findOne = (req, res) => {
 
 // Update a locations by the id in the request
 exports.update = (req, res) => {
-   if (!req.body) {
-      return res.status(400).send({
-         message: "Data to update can not be empty!",
-      });
-   }
+ 
 
    const id = req.params.id;
 
