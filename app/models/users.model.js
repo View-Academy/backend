@@ -10,7 +10,7 @@ module.exports = (mongoose) => {
       isAdmain: Boolean,
       myCourses: Array,
       previousQuiz: [Object],
-      noteQuiz: [{ type: schema.Types.ObjectId }],
+      noteQuiz: [{ type: String}],
       resetQuiz: [{ type: Number }],
       flashCard: [{ type: String }],
     },
