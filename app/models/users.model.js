@@ -5,12 +5,12 @@ module.exports = (mongoose) => {
       name: { type: String, required: true, trim: true },
       email: { type: String, required: true, trim: true },
       phone: { type: String, required: true, trim: true },
-      password: { type: String, required: true,trim: true },
+      password: { type: String, required: true, trim: true },
       isSuperAdmain: Boolean,
       isAdmain: Boolean,
-      myCourses:Array,
+      myCourses: Array,
       previousQuiz: [Object],
-      noteQuiz: [Object,{ timestamps: true }],
+      noteQuiz: [{ type: ObjectId }],
       resetQuiz: [{ type: Number }],
       flashCard: [{ type: String }],
     },
@@ -20,7 +20,7 @@ module.exports = (mongoose) => {
   schema.method('toJSON', function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
-   
+
     return object;
   });
 
