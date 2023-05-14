@@ -336,8 +336,7 @@ exports.deleteNote = (req, res) => {
         noteQuiz: { labelId: labelId },
       },
     },
-    false,
-    true,
+  
     {
       useFindAndModify: false,
     }
