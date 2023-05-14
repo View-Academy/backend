@@ -329,7 +329,7 @@ exports.findAllPublished = async (req, res) => {
 exports.deleteNote = (req, res) => {
   const id = req.params.id;
   const labelId = req.params.labelId;
-  User.findByIdAndDelete(
+  User.update(
     { _id: id },
     {
       $pull: {
