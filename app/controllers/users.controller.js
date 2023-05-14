@@ -326,7 +326,7 @@ exports.findAllPublished = async (req, res) => {
       });
     });
 };
-exports.findByIdAndUpdate = (req, res) => {
+exports.deleteNote = (req, res) => {
   const id = req.params.id;
   const labelId = req.params.labelId;
   User.update(
