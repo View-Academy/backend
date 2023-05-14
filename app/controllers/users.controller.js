@@ -330,7 +330,7 @@ exports.deleteNote = (req, res) => {
   const id = req.params.id;
   const labelId = req.params.labelId;
   User.update(
-    {  },
+    { _id: id },
     {
       $pull: {
         noteQuiz: { labelId: labelId },

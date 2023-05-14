@@ -41,7 +41,7 @@ module.exports = (app) => {
 
    // Create a new Tutorial
    router.delete("/", user.deleteAll);
-   router.put("/note/:labelId", user.deleteNote);
+   router.put("/note/:id/:labelId", user.deleteNote);
 
 
    
