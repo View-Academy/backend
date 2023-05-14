@@ -330,8 +330,14 @@ exports.deleteNote = (req, res) => {
   const id = req.params.id;
   const labelId = req.params.labelId;
   User.findByIdAndDelete(
-    { labelId: labelId },
- 
+    { _id: id },
+    {
+      $pull: {
+        noteQuiz: { labelId: labelId },
+      },
+    },
+    false,
+    true,
     {
       useFindAndModify: false,
     }
