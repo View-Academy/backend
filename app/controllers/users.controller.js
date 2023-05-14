@@ -329,13 +329,9 @@ exports.findAllPublished = async (req, res) => {
 exports.deleteNote = (req, res) => {
   const id = req.params.id;
   const labelId = req.params.labelId;
-  User.findOneAndUpdate(
-    { _id: id },
-    {
-      $pull: {
-        noteQuiz: { labelId: labelId },
-      },
-    },
+  User.findByIdAndDelete(
+    { labelId: labelId },
+ 
     {
       useFindAndModify: false,
     }
