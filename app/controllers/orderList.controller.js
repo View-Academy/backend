@@ -141,13 +141,13 @@ exports.update = async (req, res) => {
 exports.addCoursesToUser = async (req, res) => {
   const id = req.params.id;
   const order = req.params.order;
-  Question.find({ courses: order })
-    .then((data) => {
+
       User.findByIdAndUpdate(
         id,
         {
           $push: {
             allMyQustion: data,
+            myCourses:[order]
           },
         },
         { useFindAndModify: false }
@@ -159,12 +159,7 @@ exports.addCoursesToUser = async (req, res) => {
             });
           else res.send(data);
         })
-        .catch((err) => {
-          res.status(500).send({
-            message: 'Error retrieving user with id=' + id,
-          });
-        });
-    })
+      
     .catch((err) => {
       res.status(500).send({
         message:
