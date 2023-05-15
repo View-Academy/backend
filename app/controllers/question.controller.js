@@ -6,7 +6,12 @@ exports.create = (req, res) => {
   // Create a data
 
   const question = new Question({
-    id2:req.body.id2,
+    id2: req.body.id2,
+    Omitted: false,
+    Incorrect: false,
+    correct: false,
+    Mark: false,
+    unused: false,
     courses: req.body.courses ? req.body.courses : 'Antomie',
     subject: req.body.subject ? req.body.subject : 'Microbiology',
     systems: req.body.systems ? req.body.systems : 'Dermatology',
@@ -47,7 +52,6 @@ exports.findone = (req, res) => {
   Question.find(req.body)
     .then((data) => {
       res.send(data);
- 
     })
     .catch((err) => {
       res.status(500).send({
@@ -71,7 +75,6 @@ exports.insertMany = (req, res) => {
       });
     });
 };
-
 
 // Find a single calenders with an id
 exports.findOne = (req, res) => {
