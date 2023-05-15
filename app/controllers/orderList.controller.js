@@ -142,8 +142,7 @@ exports.addCoursesToUser = async (req, res) => {
   const id = req.params.id;
   const order = req.params.order;
   const data = Question.find({ name: order });
-  console.log(data);
-  
+
       User.findByIdAndUpdate(
         id,
         {
