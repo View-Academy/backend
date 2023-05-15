@@ -141,8 +141,8 @@ exports.update = async (req, res) => {
 exports.addCoursesToUser = async (req, res) => {
   const id = req.params.id;
   const order = req.params.order;
-  const data = Question.find({ name: order });
-
+  Question.find({ name: order })
+    .then((data) => {
       User.findByIdAndUpdate(
         id,
         {
@@ -164,7 +164,13 @@ exports.addCoursesToUser = async (req, res) => {
             message: 'Error retrieving user with id=' + id,
           });
         });
-  
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while retrieving Cashs.......',
+      });
+    });
 };
 
 // Delete a calenders with the specified id in the request
