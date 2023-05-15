@@ -141,13 +141,14 @@ exports.update = async (req, res) => {
 exports.addCoursesToUser = async (req, res) => {
   const id = req.params.id;
   const order = req.params.order;
-  Question.find({ name: order })
-    .then((data) => {
+  const data = Question.find({ name: order });
+  console.log(data);
+  
       User.findByIdAndUpdate(
         id,
         {
           $push: {
-            allMyQustion: [JSON.stringify(data)],
+            allMyQustion: [data],
           },
         },
         { useFindAndModify: false }
@@ -164,13 +165,7 @@ exports.addCoursesToUser = async (req, res) => {
             message: 'Error retrieving user with id=' + id,
           });
         });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while retrieving Cashs.......',
-      });
-    });
+  
 };
 
 // Delete a calenders with the specified id in the request
