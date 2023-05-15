@@ -2,6 +2,7 @@ const db = require('../models');
 const serves = require('../services/serversUser');
 const Order = db.order;
 const User = db.user;
+const Question = db.question;
 // Create and Save a new daet
 var today = new Date();
 exports.create = (req, res) => {
@@ -11,7 +12,7 @@ exports.create = (req, res) => {
     userID: req.body.userID,
     courseName: req.body.courseName,
     price: req.body.price,
-    date:req.body.date,
+    date: req.body.date,
     numberPhone: req.body.numberPhone,
     discrption: req.body.discrption,
   });
@@ -140,26 +141,34 @@ exports.update = async (req, res) => {
 exports.addCoursesToUser = async (req, res) => {
   const id = req.params.id;
   const order = req.params.order;
-
-  User.findByIdAndUpdate(
-    id,
-    {
-      $push: {
-        myCourses: [order],
-      },
-    },
-    { useFindAndModify: false }
-  )
+  Question.find({ name: order })
     .then((data) => {
-      if (!data)
-        res.status(404).send({
-          message: 'Not found user with id ' + id,
+      User.findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            myCourses: [data],
+          },
+        },
+        { useFindAndModify: false }
+      )
+        .then((data) => {
+          if (!data)
+            res.status(404).send({
+              message: 'Not found user with id ' + id,
+            });
+          else res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: 'Error retrieving user with id=' + id,
+          });
         });
-      else res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: 'Error retrieving user with id=' + id,
+        message:
+          err.message || 'Some error occurred while retrieving Cashs.......',
       });
     });
 };
@@ -167,7 +176,6 @@ exports.addCoursesToUser = async (req, res) => {
 // Delete a calenders with the specified id in the request
 exports.delete = async (req, res) => {
   const id = req.params.id;
- 
 
   await Order.findByIdAndRemove(id, { useFindAndModify: false })
     .then((data) => {
