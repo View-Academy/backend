@@ -24,6 +24,7 @@ exports.create = (req, res) => {
     Incorrect: req.body.Incorrect ? req.body.Incorrect : [],
     correct: req.body.correct ? req.body.correct : [],
     Mark: req.body.Mark ? req.body.Mark : [],
+    allMyQustion: req.body.allMyQustion ? req.body.allMyQustion : [],
   });
   // const token = user.token();
   // user.auth = token;
