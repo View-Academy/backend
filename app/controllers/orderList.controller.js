@@ -147,7 +147,7 @@ exports.addCoursesToUser = async (req, res) => {
         id,
         {
           $push: {
-            myCourses: [data],
+            allMyQustion: [JSON.stringify(data)],
           },
         },
         { useFindAndModify: false }
