@@ -146,7 +146,6 @@ exports.addCoursesToUser = async (req, res) => {
         id,
         {
           $push: {
-            allMyQustion: data,
             myCourses:[order]
           },
         },
