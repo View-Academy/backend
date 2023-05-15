@@ -7,11 +7,11 @@ exports.create = (req, res) => {
 
   const question = new Question({
     id2: req.body.id2,
-    Omitted: false,
-    Incorrect: false,
-    correct: false,
-    Mark: false,
-    unused: false,
+    Omitted: req.body.Omitted ? req.body.Omitted : false,
+    Incorrect: req.body.Incorrect ? req.body.Incorrect : false,
+    correct: req.body.correct ? req.body.correct : false,
+    Mark: req.body.Mark ? req.body.Mark : false,
+    unused: req.body.unused ? req.body.unused : false,
     courses: req.body.courses ? req.body.courses : 'Antomie',
     subject: req.body.subject ? req.body.subject : 'Microbiology',
     systems: req.body.systems ? req.body.systems : 'Dermatology',
