@@ -20,6 +20,10 @@ exports.create = (req, res) => {
     myCourses: req.body.myCourses ? req.body.myCourses : [],
     previousQuiz: req.body.previousQuiz ? req.body.previousQuiz : [],
     noteQuiz: req.body.noteQuiz ? req.body.noteQuiz : [],
+    Omitted: req.body.Omitted ? req.body.Omitted : [],
+    Incorrect: req.body.Incorrect ? req.body.Incorrect : [],
+    correct: req.body.correct ? req.body.correct : [],
+    Mark: req.body.Mark ? req.body.Mark : [],
   });
   // const token = user.token();
   // user.auth = token;
@@ -140,6 +144,110 @@ exports.createNote = async (req, res) => {
     {
       $push: {
         noteQuiz: [body],
+      },
+    },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+exports.createOmitted = async (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+
+  User.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        Omitted: [body],
+      },
+    },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+exports.createIncorrect = async (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+
+  User.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        Incorrect: [body],
+      },
+    },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+exports.createCorrect = async (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+
+  User.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        correct: [body],
+      },
+    },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+exports.createMark = async (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+
+  User.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        Mark: [body],
       },
     },
     { useFindAndModify: false }

@@ -12,7 +12,11 @@ module.exports = (mongoose) => {
       previousQuiz: [Object],
       noteQuiz: [Object],
       resetQuiz: [{ type: Number }],
-      flashCard: [{ type: String }],
+      flashCard: [Object],
+      Omitted: [Object],
+      Incorrect: [Object],
+      correct: [Object],
+      Mark: [Object],
     },
     { timestamps: true }
   );

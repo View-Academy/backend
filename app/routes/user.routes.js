@@ -7,6 +7,10 @@ module.exports = (app) => {
    router.post("/", user.create);
    // Create a new Tutorial
    router.post("/note/:id", user.createNote);
+   router.post("/omitted/:id", user.createOmitted);
+   router.post("/incorrect/:id", user.createIncorrect);
+   router.post("/correct/:id", user.createCorrect);
+   router.post("/mark/:id", user.createMark);
 
    // Retrieve all Tutorials
    router.get("/", user.findAll);
