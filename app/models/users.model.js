@@ -17,6 +17,7 @@ module.exports = (mongoose) => {
       Incorrect: [Object],
       correct: [Object],
       Mark: [Object],
+      unused: [Object],
       allMyQustion: [Object],
     },
     { timestamps: true }

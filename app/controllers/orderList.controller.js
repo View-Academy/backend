@@ -141,24 +141,23 @@ exports.update = async (req, res) => {
 exports.addCoursesToUser = async (req, res) => {
   const id = req.params.id;
   const order = req.params.order;
+  User.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        myCourses: [order],
+      },
+    },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
 
-      User.findByIdAndUpdate(
-        id,
-        {
-          $push: {
-            myCourses:[order]
-          },
-        },
-        { useFindAndModify: false }
-      )
-        .then((data) => {
-          if (!data)
-            res.status(404).send({
-              message: 'Not found user with id ' + id,
-            });
-          else res.send(data);
-        })
-      
     .catch((err) => {
       res.status(500).send({
         message:
@@ -166,6 +165,7 @@ exports.addCoursesToUser = async (req, res) => {
       });
     });
 };
+
 
 // Delete a calenders with the specified id in the request
 exports.delete = async (req, res) => {

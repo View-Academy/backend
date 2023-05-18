@@ -1,10 +1,6 @@
 module.exports = (mongoose) => {
   var schema = mongoose.Schema({
-    Omitted:Boolean,
-    Incorrect:Boolean,
-    correct:Boolean,
-    Mark:Boolean,
-    unused:Boolean,
+ 
     id2:Number,
     type: String,
     courses: String,

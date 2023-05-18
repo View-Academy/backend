@@ -1,54 +1,80 @@
 module.exports = (app) => {
-   const user = require("../controllers/users.controller.js");
+  const user = require('../controllers/users.controller.js');
 
-   var router = require("express").Router();
+  var router = require('express').Router();
 
-   // Create a new Tutorial
-   router.post("/", user.create);
-   // Create a new Tutorial
-   router.post("/note/:id", user.createNote);
-   router.post("/omitted/:id", user.createOmitted);
-   router.post("/incorrect/:id", user.createIncorrect);
-   router.post("/correct/:id", user.createCorrect);
-   router.post("/mark/:id", user.createMark);
+  // Create a new Tutorial
+  router.post('/', user.create);
+  // Create a new Tutorial
+  router.put('/note/:id', user.createNote);
+  router.post('/omitted/:id', user.createOmitted);
+  router.put('/correct/:id/:id3', user.createCorrect);
+  router.post('/mark/:id', user.createMark);
+  router.post('/unused/:id', user.createUnused);
 
-   // Retrieve all Tutorials
-   router.get("/", user.findAll);
+  /**Correct Secation*/
+  ///////////////////////////////////////////////////////////////////////////
+  router.get('/correct/:id', user.findUserCorrect);
+  router.put('/matchcorrect/:id/:id3', user.matchcorrect);
+  router.put('/pullcorrect/:id/:idp', user.pullUsercorrect);
+  router.put('/correct/:id/:id3', user.createcorrect);
 
-   // Retrieve all Tutorials
-   router.get("/note/:id", user.findNote);
-   // Retrieve all Tutorials
-   router.get("/myquizes/:id", user.findQuizez);
-    // find  all re
-   router.get("/myquizes/resalut/:id", user.findResalut);
+  //////////////////////////////////////////////////////////////////////////
 
-   // Retrieve all published Tutorials
-   router.get("/published", user.findAllPublished);
+  /**Incorrect Secation*/
+  ////////////////////////////////////////////////////////////////////////////
+  router.get('/incorrect/:id', user.findUserIncorect);
+  router.put('/match/:id/:id3', user.matchIncorrect);
+  router.put('/pullincorrect/:id/:idp', user.pullUserIncorrect);
+  router.put('/incorrect/:id/:id3', user.createIncorrect);
+  ////////////////////////////////////////////////////////////////////////////
 
-   // Retrieve a single Tutorial with id
-   router.get("/:id", user.findOne);
+  /**Omitted Secation*/
+  ////////////////////////////////////////////////////////////////////////////
+  router.get('/incorrect/:id', user.findUserIncorect);
+  router.put('/matchomitted/:id/:id3', user.matchomitted);
+  router.put('/pullomitted/:id/:idp', user.pullUserIncorrect);
+  router.put('/createomitted/:id/:id3', user.createomitted);
+  ////////////////////////////////////////////////////////////////////////////
+  // Retrieve all Tutorials
+  router.get('/findomitted/:id', user.findOmitted);
+  router.get('/findIncorrect/:order', user.findQustions);
 
-   // Update a Tutorial with id
-   router.put("/:id", user.update);
+  // Retrieve all Tutorials
+  router.get('/', user.findAll);
 
-   router.post("/endquize/:id", user.endQuize);
+  // Retrieve all Tutorials
+  router.get('/note/:id', user.findNote);
+  // Retrieve all Tutorials
 
-   // ub
-   router.put("/modifiy/:id", user.published);
+  router.get('/myquizes/:id', user.findQuizez);
+  // find  all re
+  router.get('/myquizes/resalut/:id', user.findResalut);
 
-   // update Without Delete
-   router.put("/recovery/:id", user.recovery);
+  // Retrieve all published Tutorials
+  router.get('/published', user.findAllPublished);
 
-   // Delete a Tutorial with idy
-   
-   router.delete("/:id", user.delete);
+  // Retrieve a single Tutorial with id
+  router.get('/:id', user.findOne);
 
-   // Create a new Tutorial
-   router.delete("/", user.deleteAll);
-   router.put("/note/:id/:labelId", user.deleteNote);
+  // Update a Tutorial with id
+  router.put('/:id', user.update);
 
+  router.post('/endquize/:id', user.endQuize);
 
-   
+  // ub
+  router.put('/modifiy/:id', user.published);
 
-   app.use("/api/user", router);
+  // update Without Delete
+  router.put('/recovery/:id', user.recovery);
+
+  // Delete a Tutorial with idy
+
+  router.delete('/:id', user.delete);
+
+  // Create a new Tutorial
+  router.delete('/', user.deleteAll);
+  router.put('/note/:id/:labelId', user.deleteNote);
+
+  app.use('/api/user', router);
 };

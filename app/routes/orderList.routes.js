@@ -7,6 +7,7 @@ module.exports = (app) => {
 
 
   router.put("/add/:id/:order", order.addCoursesToUser);
+  
   // Retrieve all Cash
   router.get('/', order.findAll);
 
