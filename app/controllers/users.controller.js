@@ -172,7 +172,7 @@ exports.findOmitted = async (req, res) => {
 exports.findQustions = (req, res) => {
   const ids = req.params.order;
 
-  Question.find({ _id: { $in: ids } })
+  Question.find({ id2: { $in: ids } })
     .then((data) => {
       res.send(data);
     })
@@ -240,14 +240,14 @@ exports.createOmitted = async (req, res) => {
 // Correct Seactions Start////////////////////////////////////////////////////////////////////////////////////////
 exports.findUserCorrect = async (req, res) => {
   const id = req.params.id;
-
+  const body = [];
   await User.findById(id)
     .then((data) => {
-      if (!data)
+      if (!data)  
         res.status(404).send({
           message: 'Not found user with id ' + id,
         });
-      else res.send(data.correct);
+      else res.send(data.correct)
     })
     .catch((err) => {
       res.status(500).send({

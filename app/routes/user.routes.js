@@ -23,7 +23,7 @@ module.exports = (app) => {
 
   /**Incorrect Secation*/
   ////////////////////////////////////////////////////////////////////////////
-  router.get('/incorrect/:id', user.findUserIncorect);
+  // router.get('/incorrect/:id', user.findUserIncorect);
   router.put('/match/:id/:id3', user.matchIncorrect);
   router.put('/pullincorrect/:id/:idp', user.pullUserIncorrect);
   router.put('/incorrect/:id/:id3', user.createIncorrect);

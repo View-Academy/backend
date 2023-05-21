@@ -44,7 +44,35 @@ exports.findAll = (req, res) => {
 
 //filtring
 exports.findone = (req, res) => {
-  Question.find(req.body)
+  Question.find({
+    $and: [req.body],
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while retrieving Cashs.......',
+      });
+    });
+};
+exports.findonesubject = (req, res) => {
+  let data = req.body;
+  Question.find({ subject: { $in: data } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while retrieving Cashs.......',
+      });
+    });
+};
+exports.findonesystem = (req, res) => {
+  let data = req.body;
+  Question.find({ systems: { $in: data } })
     .then((data) => {
       res.send(data);
     })
