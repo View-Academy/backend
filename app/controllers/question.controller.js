@@ -43,9 +43,11 @@ exports.findAll = (req, res) => {
 };
 
 //filtring
+
+
 exports.findone = (req, res) => {
   Question.find({
-    $and: [req.body],
+    $or: [req.body],
   })
     .then((data) => {
       res.send(data);
@@ -57,6 +59,11 @@ exports.findone = (req, res) => {
       });
     });
 };
+
+
+
+
+
 exports.findonesubject = (req, res) => {
   let data = req.body;
   Question.find({ subject: { $in: data } })
@@ -70,6 +77,9 @@ exports.findonesubject = (req, res) => {
       });
     });
 };
+
+
+
 exports.findonesystem = (req, res) => {
   let data = req.body;
   Question.find({ systems: { $in: data } })

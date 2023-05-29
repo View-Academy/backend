@@ -16,25 +16,38 @@ module.exports = (app) => {
   ///////////////////////////////////////////////////////////////////////////
   router.get('/correct/:id', user.findUserCorrect);
   router.put('/matchcorrect/:id/:id3', user.matchcorrect);
-  router.put('/pullcorrect/:id/:idp', user.pullUsercorrect);
+  router.put('/pullcorrect/:id', user.pullUsercorrect);
   router.put('/correct/:id/:id3', user.createcorrect);
 
   //////////////////////////////////////////////////////////////////////////
+  router.post('/findQustioncorrect/:id', user.findQustionTypeCorrect);
+  router.post('/findQustionomitted/:id', user.findQustionTypeOmitted);
+  router.post('/findQustionincorrect/:id', user.findQustionTypeIncorrect);
+  router.post('/findQustionmark/:id', user.findQustionTypeMark);
+
 
   /**Incorrect Secation*/
   ////////////////////////////////////////////////////////////////////////////
   // router.get('/incorrect/:id', user.findUserIncorect);
+  router.get('/incorrect/:id', user.findUserIncorect);
   router.put('/match/:id/:id3', user.matchIncorrect);
-  router.put('/pullincorrect/:id/:idp', user.pullUserIncorrect);
+  router.put('/pullincorrect/:id', user.pullUserIncorrect);
   router.put('/incorrect/:id/:id3', user.createIncorrect);
   ////////////////////////////////////////////////////////////////////////////
 
   /**Omitted Secation*/
   ////////////////////////////////////////////////////////////////////////////
-  router.get('/incorrect/:id', user.findUserIncorect);
+  router.get('/omitted/:id', user.findUserOmitted);
   router.put('/matchomitted/:id/:id3', user.matchomitted);
-  router.put('/pullomitted/:id/:idp', user.pullUserIncorrect);
+  router.put('/pullomitted/:id', user.pullUseromitted);
   router.put('/createomitted/:id/:id3', user.createomitted);
+  ////////////////////////////////////////////////////////////////////////////
+  /**Mark Secation*/
+  ////////////////////////////////////////////////////////////////////////////
+  router.get('/mark/:id', user.findUserMark);
+  router.put('/matchmark/:id/:id3', user.matchmark);
+  router.put('/pullmark/:id', user.pullUsermark);
+  router.put('/createmark/:id/:id3', user.createmark);
   ////////////////////////////////////////////////////////////////////////////
   // Retrieve all Tutorials
   router.get('/findomitted/:id', user.findOmitted);

@@ -184,6 +184,87 @@ exports.findQustions = (req, res) => {
     });
 };
 
+exports.findQustionTypeCorrect = async (req, res) => {
+  const id = req.params.id;
+  // const g = JSON.stringify(req.body);
+  await User.findById(id)
+    .then((resdata) => {
+      Question.find({ id2: resdata.correct, $or: [req.body] })
+        .then((data) => {
+          console.log(data);
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message:
+              err.message ||
+              'Some error occurred while retrieving Cashs.......',
+          });
+        });
+    })
+    .catch((err) => {});
+};
+exports.findQustionTypeIncorrect = async (req, res) => {
+  const id = req.params.id;
+  // const g = JSON.stringify(req.body);
+  await User.findById(id)
+    .then((resdata) => {
+      Question.find({ id2: resdata.Incorrect, $or: [req.body] })
+        .then((data) => {
+          console.log(data);
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message:
+              err.message ||
+              'Some error occurred while retrieving Cashs.......',
+          });
+        });
+    })
+    .catch((err) => {});
+};
+exports.findQustionTypeMark = async (req, res) => {
+  const id = req.params.id;
+  // const g = JSON.stringify(req.body);
+  await User.findById(id)
+    .then((resdata) => {
+      Question.find({ id2: resdata.Mark, $or: [req.body] })
+        .then((data) => {
+          console.log(data);
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message:
+              err.message ||
+              'Some error occurred while retrieving Cashs.......',
+          });
+        });
+    })
+    .catch((err) => {});
+};
+exports.findQustionTypeOmitted = async (req, res) => {
+  const id = req.params.id;
+  // const g = JSON.stringify(req.body);
+  await User.findById(id)
+    .then((resdata) => {
+      Question.find({ id2: resdata.Omitted, $or: [req.body] })
+        .then((data) => {
+          console.log(data);
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message:
+              err.message ||
+              'Some error occurred while retrieving Cashs.......',
+          });
+        });
+    })
+    .catch((err) => {});
+};
+
 // Find a single calenders with an id
 exports.createNote = async (req, res) => {
   const id = req.params.id;
@@ -240,14 +321,25 @@ exports.createOmitted = async (req, res) => {
 // Correct Seactions Start////////////////////////////////////////////////////////////////////////////////////////
 exports.findUserCorrect = async (req, res) => {
   const id = req.params.id;
-  const body = [];
   await User.findById(id)
     .then((data) => {
-      if (!data)  
+      if (!data) {
         res.status(404).send({
           message: 'Not found user with id ' + id,
         });
-      else res.send(data.correct)
+      } else {
+        Question.find({ id2: data.correct })
+          .then((data) => {
+            res.send(data);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message ||
+                'Some error occurred while retrieving Cashs.......',
+            });
+          });
+      }
     })
     .catch((err) => {
       res.status(500).send({
@@ -258,13 +350,11 @@ exports.findUserCorrect = async (req, res) => {
 
 exports.pullUsercorrect = async (req, res) => {
   const id = req.params.id;
-  const body = req.params.idp;
-
   User.findByIdAndUpdate(
     { _id: id },
     {
-      $pull: {
-        correct: body,
+      $set: {
+        correct: [],
       },
     },
     { useFindAndModify: false }
@@ -410,6 +500,7 @@ exports.matchIncorrect = async (req, res) => {
       });
     });
 };
+
 exports.createIncorrect = async (req, res) => {
   const id = req.params.id;
   const body = req.params.id3;
@@ -438,13 +529,11 @@ exports.createIncorrect = async (req, res) => {
 };
 exports.pullUserIncorrect = async (req, res) => {
   const id = req.params.id;
-  const body = req.params.idp;
-
   User.findByIdAndUpdate(
     { _id: id },
     {
-      $pull: {
-        Incorrect: body,
+      $set: {
+        Incorrect: [],
       },
     },
     { useFindAndModify: false }
@@ -482,7 +571,7 @@ exports.findUserIncorect = async (req, res) => {
 // Incorrect Seactions End////////////////////////////////////////////////////////////////////////////////////////
 
 // Omitted Seactions Start////////////////////////////////////////////////////////////////////////////////////////
-exports.findUseromitted = async (req, res) => {
+exports.findUserOmitted = async (req, res) => {
   const id = req.params.id;
   await User.findById(id)
     .then((data) => {
@@ -500,12 +589,11 @@ exports.findUseromitted = async (req, res) => {
 };
 exports.pullUseromitted = async (req, res) => {
   const id = req.params.id;
-  const body = req.params.idp;
   User.findByIdAndUpdate(
     { _id: id },
     {
-      $pull: {
-        Omitted: body,
+      $set: {
+        Omitted: [],
       },
     },
     { useFindAndModify: false }
@@ -598,6 +686,122 @@ exports.matchomitted = async (req, res) => {
     });
 };
 // Omitted Seactions End////////////////////////////////////////////////////////////////////////////////////////
+
+// Mark Seactions Start////////////////////////////////////////////////////////////////////////////////////////
+exports.findUserMark = async (req, res) => {
+  const id = req.params.id;
+  await User.findById(id)
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data.Mark);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+
+exports.pullUsermark = async (req, res) => {
+  const id = req.params.id;
+  User.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        Mark: [],
+      },
+    },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+exports.createmark = async (req, res) => {
+  const id = req.params.id;
+  const body = req.params.id3;
+  User.findByIdAndUpdate(
+    { _id: id },
+    {
+      $push: {
+        Mark: [body],
+      },
+    },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+exports.matchmark = async (req, res) => {
+  const id = req.params.id;
+  const body = req.params.id3;
+  User.findById(
+    { _id: id },
+    function (err, exist) {
+      User.find({
+        $or: [
+          { correct: { $in: [body] } },
+          { Incorrect: { $in: [body] } },
+          { unused: { $in: [body] } },
+        ],
+      })
+        .then((r) => {
+          User.findByIdAndUpdate(
+            { _id: id },
+            {
+              $pull: {
+                unused: body,
+              },
+              $push: {
+                Mark: body,
+              },
+            },
+            { useFindAndModify: false }
+          ).then((data) => {});
+        })
+        .catch((err) => {
+          console.log('sdsadsadsad');
+        });
+    },
+
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+// Mark Seactions End////////////////////////////////////////////////////////////////////////////////////////
 
 exports.createCorrect = async (req, res) => {
   const id = req.params.id;
