@@ -10,6 +10,7 @@ module.exports = (app) => {
   router.post('/omitted/:id', user.createOmitted);
   router.put('/correct/:id/:id3', user.createCorrect);
   router.post('/mark/:id', user.createMark);
+  router.post('/flashCard/:id', user.createFlashCard);
   router.post('/unused/:id', user.createUnused);
 
   /**Correct Secation*/

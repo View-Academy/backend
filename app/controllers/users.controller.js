@@ -881,6 +881,32 @@ exports.createMark = async (req, res) => {
       });
     });
 };
+exports.createFlashCard = async (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+
+  User.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        flashCard: [body],
+      },
+    },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
 
 exports.endQuize = async (req, res) => {
   const id = req.params.id;
