@@ -882,25 +882,45 @@ exports.createMark = async (req, res) => {
     });
 };
 exports.createFlashCard = async (req, res) => {
-  const id = req.params.id;
   const body = req.body;
+  const arrayIndex = 0;
+  const id = req.params.id;
+  await User.findById(id)
+    .then(
+      (data2) => {
+        if (!data2)
+          res.status(404).send({
+            message: 'Not found user with id ' + id,
+          });
+        else {
+          try {
+            var firstElement = data2.flashCard[arrayIndex];
+            User.findByIdAndUpdate(
+              { _id: id },
 
-  User.findByIdAndUpdate(
-    id,
-    {
-      $push: {
-        flashCard: [body],
+              {
+                $set: {
+                  [`flashCard.${arrayIndex}`]: body,
+                },
+              },
+
+              { useFindAndModify: false }
+            )
+              .lean()
+              .then((data) => {
+                if (!data)
+                  res.status(404).send({
+                    message: 'Not found user with id ' + id,
+                  });
+                else res.send(data);
+              });
+          } catch (error) {
+            console.log('Error: ', error);
+          }
+        }
       },
-    },
-    { useFindAndModify: false }
-  )
-    .then((data) => {
-      if (!data)
-        res.status(404).send({
-          message: 'Not found user with id ' + id,
-        });
-      else res.send(data);
-    })
+      { useNewUrlParser: true, useUnifiedTopology: true }
+    )
     .catch((err) => {
       res.status(500).send({
         message: 'Error retrieving user with id=' + id,
