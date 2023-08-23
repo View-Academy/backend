@@ -29,6 +29,7 @@ module.exports = (app) => {
   router.post('/findQustionomitted/:id', user.findQustionTypeOmitted);
   router.post('/findQustionincorrect/:id', user.findQustionTypeIncorrect);
   router.post('/findQustionmark/:id', user.findQustionTypeMark);
+  router.get('/checkifexist/:email', user.findUserByEmail);
 
   
 

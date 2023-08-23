@@ -317,6 +317,22 @@ exports.findQustionTypeMark = async (req, res) => {
     })
     .catch((err) => {});
 };
+
+
+exports.findUserByEmail = async (req, res) => {
+  const email = req.params.email;
+  await User.findOne({ email: email })
+    .then((data) => {
+      if (!data)
+        res.send("not founded")
+      else res.send(data.email);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + email,
+      });
+    });
+};
 exports.findQustionTypeOmitted = async (req, res) => {
   const id = req.params.id;
   // const g = JSON.stringify(req.body);
