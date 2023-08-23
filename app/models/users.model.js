@@ -19,6 +19,7 @@ module.exports = (mongoose) => {
       Mark: [Object],
       unused: [Object],
       allMyQustion: [Object],
+      types: Array,
     },
     { timestamps: true }
   );

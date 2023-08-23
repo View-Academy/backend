@@ -13,6 +13,10 @@ module.exports = (app) => {
   router.post('/flashCard/:id', user.createFlashCard);
   router.post('/unused/:id', user.createUnused);
 
+  router.post('/types/:id/:order', user.createType);
+  router.get('/typesget/:id', user.findUserTypes);
+  router.get('/flashcard/:id', user.findUserflashcard);
+
   /**Correct Secation*/
   ///////////////////////////////////////////////////////////////////////////
   router.get('/correct/:id', user.findUserCorrect);
@@ -57,6 +61,7 @@ module.exports = (app) => {
 
   // Retrieve all Tutorials
   router.get('/', user.findAll);
+  router.get('/findByName/:name', user.findByName);
 
   // Retrieve all Tutorials
   router.get('/note/:id', user.findNote);

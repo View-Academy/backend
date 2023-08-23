@@ -65,6 +65,79 @@ exports.findAll = async (req, res) => {
     });
 };
 
+exports.createType = async (req, res) => {
+  const userId = req.params.id;
+  const order = req.params.order;
+  User.findByIdAndUpdate(
+    userId,
+    {
+      $push: { types: order },
+    },
+    { new: true }, // This option returns the updated document
+    (err, updatedUser) => {
+      if (err) {
+        // Handle any errors that occurred during the update
+        console.error(err);
+      } else if (updatedUser) {
+        // If the update was successful, 'updatedUser' will contain the updated user document
+        res.send(updatedUser);
+      } else {
+        // If no user with the specified is found, 'updatedUser' will be null
+        console.log('User not found');
+      }
+    }
+  );
+};
+
+exports.findUserTypes = async (req, res) => {
+  const id = req.params.id;
+  await User.findById(id)
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data.types);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+
+
+exports.findUserflashcard = async (req, res) => {
+  const id = req.params.id;
+  await User.findById(id)
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data.flashCard);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
+
+exports.findByName = async (req, res) => {
+  const { name } = req.params;
+  await User.findOne({ name: name })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while removing all locations.',
+      });
+    });
+};
+
 // Find a single calenders with an id
 exports.findOne = async (req, res) => {
   const id = req.params.id;
@@ -882,50 +955,36 @@ exports.createMark = async (req, res) => {
     });
 };
 exports.createFlashCard = async (req, res) => {
-  const body = req.body;
-  const arrayIndex = 0;
-  const id = req.params.id;
-  await User.findById(id)
-    .then(
-      (data2) => {
-        if (!data2)
-          res.status(404).send({
-            message: 'Not found user with id ' + id,
-          });
-        else {
-          try {
-            var firstElement = data2.flashCard[arrayIndex];
-            User.findByIdAndUpdate(
-              { _id: id },
+  try {
+    const userId = req.params.id; // Get the user ID from the request parameters
+    const flashCard = req.body;
 
-              {
-                $set: {
-                  [`flashCard.${arrayIndex}`]: body,
-                },
-              },
+    // Define the new flash card object you want to push
+    // const flashCard = {
+    //   // Define the properties of the new flash card here
+    //   front: 'Front of the card',
+    //   back: 'Back of the card',
+    //   // ... other properties as needed
+    // };
 
-              { useFindAndModify: false }
-            )
-              .lean()
-              .then((data) => {
-                if (!data)
-                  res.status(404).send({
-                    message: 'Not found user with id ' + id,
-                  });
-                else res.send(data);
-              });
-          } catch (error) {
-            console.log('Error: ', error);
-          }
-        }
-      },
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    )
-    .catch((err) => {
-      res.status(500).send({
-        message: 'Error retrieving user with id=' + id,
-      });
-    });
+    // Find the user by ID and push the new flash card into the flashCard array
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { flashCard: flashCard } },
+      { new: true, useFindAndModify: false }
+    );
+
+    // Check if the user exists
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Respond with the updated user
+    res.json(updatedUser);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 exports.endQuize = async (req, res) => {
