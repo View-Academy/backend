@@ -123,6 +123,119 @@ exports.findUserflashcard = async (req, res) => {
       });
     });
 };
+exports.findUserAndDeleteflashcard = async (req, res) => {
+  const id = req.params.id;
+  const flashCardIndex = req.params.unqie; // Assuming 'index' is the parameter for the flashCard index
+  User.update(
+    { _id: id },
+    {
+      $pull: {
+        flashCard: { unqie: flashCardIndex },
+      },
+    },
+
+    {
+      useFindAndModify: false,
+    }
+  )
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot delete Cash with id=${id}. Maybe Cash was not found!`,
+        });
+      } else {
+        res.send({
+          message: 'Cash was deleted successfully!',
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not delete Cash with id=' + id,
+      });
+    });
+};
+exports.findUserAndDeleteType = async (req, res) => {
+  const id = req.params.id;
+  const typendex = req.params.type; // Assuming 'index' is the parameter for the flashCard index
+  User.update(
+    { _id: id },
+    {
+      $pull: {
+        types: typendex,
+      },
+    },
+
+    {
+      useFindAndModify: false,
+    }
+  )
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message:` Cannot delete Cash with id=${id}. Maybe Cash was not found!`,
+        });
+      } else {
+        res.send({
+          message: 'Cash was deleted successfully!',
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not delete Cash with id=' + id,
+      });
+    });
+};
+
+exports.findUserAndDeleteCourse = async (req, res) => {
+  const id = req.params.id;
+  const course = req.params.course; // Assuming 'index' is the parameter for the flashCard index
+  User.update(
+    { _id: id },
+    {
+      $pull: {
+        myCourses: course,
+      },
+    },
+
+    {
+      useFindAndModify: false,
+    }
+  )
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot delete Cash with id=${id}. Maybe Cash was not found!`,
+        });
+      } else {
+        res.send({
+          message: 'Cash was deleted successfully!',
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not delete Cash with id=' + id,
+      });
+    });
+};
+exports.findUserGetCourses= async (req, res) => {
+  const id = req.params.id;
+  await User.findById(id)
+    .then((data) => {
+      if (!data)
+        res.status(404).send({
+          message: 'Not found user with id ' + id,
+        });
+      else res.send(data.myCourses);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
+      });
+    });
+};
 
 exports.findByName = async (req, res) => {
   const { name } = req.params;

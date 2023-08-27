@@ -16,6 +16,10 @@ module.exports = (app) => {
   router.post('/types/:id/:order', user.createType);
   router.get('/typesget/:id', user.findUserTypes);
   router.get('/flashcard/:id', user.findUserflashcard);
+  router.put('/flashcard2/:id/:unqie', user.findUserAndDeleteflashcard);
+  router.put('/deleteType/:id/:type', user.findUserAndDeleteType);
+  router.put('/deletecours/:id/:course', user.findUserAndDeleteCourse);
+  router.get('/getcourses/:id', user.findUserGetCourses);
 
   /**Correct Secation*/
   ///////////////////////////////////////////////////////////////////////////
